@@ -4,10 +4,17 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { fetchLocation } from '../redux/modules/location';
+import { fetchWeather } from '../redux/modules/weather';
 
 class App extends Component {
   componentWillMount() {
-    this.props.fetchLocation();
+    this.props.fetchLocation()
+      .then(() => {
+        this.props.fetchWeather({
+          lat: this.props.location.location.coords.latitude,
+          lng: this.props.location.location.coords.longitude
+        });
+      });
   }
 
   render() {
@@ -28,9 +35,10 @@ class App extends Component {
 
 App.propTypes = {
   fetchLocation: PropTypes.func.isRequired,
+  fetchWeather: PropTypes.func.isRequired,
   location: PropTypes.shape({
     location: PropTypes.object
   }).isRequired
 };
 
-export default connect(({ location }) => ({ location }), { fetchLocation })(App);
+export default connect(({ location }) => ({ location }), { fetchLocation, fetchWeather })(App);

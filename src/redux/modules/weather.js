@@ -37,9 +37,9 @@ export default function (state = initialState, action) {
   }
 }
 
-export function fetchWeather(location) {
+export function fetchWeather({ lat, lng }) {
   return {
     type: GET_WEATHER,
-    promise: createApiRequest(`${location.lat},${location.lng}`, 'GET')
+    promise: createApiRequest(`${lat},${lng}`, 'GET')
   };
 }

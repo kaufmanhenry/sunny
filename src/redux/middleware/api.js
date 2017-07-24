@@ -1,5 +1,5 @@
 export default function apiMiddleware() {
-  return () => next => (action) => {
+  return next => (action) => {
     const {
       type,
       promise,

@@ -1,23 +1,36 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
+import { fetchLocation } from '../redux/modules/location';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  componentWillMount() {
+    this.props.fetchLocation();
   }
 
   render() {
+    const { location: { location: { coords } } } = this.props;
     const styles = StyleSheet.create({
       container: {
-        paddingVertical: 50
+        paddingVertical: 50,
+        paddingHorizontal: 50
       }
     });
     return (
       <View style={styles.container}>
-        <Text>SUNNY</Text>
+        {coords && <Text>{coords.latitude} {coords.longitude}</Text>}
       </View>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  fetchLocation: PropTypes.func.isRequired,
+  location: PropTypes.shape({
+    location: PropTypes.object
+  }).isRequired
+};
+
+export default connect(({ location }) => ({ location }), { fetchLocation })(App);

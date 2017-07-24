@@ -9,6 +9,7 @@
     "document": true,
     "window": true,
     "localStorage": true,
-    "fetch": true
+    "fetch": true,
+    "navigator": true
   }
 }

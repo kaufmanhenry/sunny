@@ -1,19 +1,19 @@
-import {
-  GET_WEATHER_REQUEST,
-  GET_WEATHER_SUCCESS,
-  GET_WEATHER_FAILURE,
-} from '../constants/weather';
+import createApiRequest from '../../utils/createApiRequest';
 
-const defaultState = {
+export const GET_WEATHER = 'GET_WEATHER';
+export const GET_WEATHER_SUCCESS = 'GET_WEATHER_SUCCESS';
+export const GET_WEATHER_FAILURE = 'GET_WEATHER_FAILURE';
+
+const initialState = {
   loading: false,
   loaded: false,
   currentWeather: {}
 };
 
-export default function (state = defaultState, action) {
+export default function (state = initialState, action) {
   const { response } = action;
   switch (action.type) {
-    case GET_WEATHER_REQUEST:
+    case GET_WEATHER:
       return {
         ...state,
         loading: true,
@@ -35,4 +35,11 @@ export default function (state = defaultState, action) {
     default:
       return state;
   }
+}
+
+export function fetchWeather(location) {
+  return {
+    type: GET_WEATHER,
+    promise: createApiRequest(`${location.lat},${location.lng}`, 'GET')
+  };
 }

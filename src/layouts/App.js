@@ -21,8 +21,23 @@ class App extends Component {
     const { weather: { currentWeather: { timezone, currently }, loading, loaded } } = this.props;
     const styles = StyleSheet.create({
       container: {
-        paddingVertical: 50,
-        paddingHorizontal: 50
+        paddingVertical: 60,
+        paddingHorizontal: 27
+      },
+      location: {
+        fontSize: 16,
+        color: '#aaa'
+      },
+      weather: {
+        color: '#111',
+        fontSize: 30,
+        marginTop: 60
+      },
+      temp: {
+        color: '#FF851B'
+      },
+      summary: {
+        color: '#7FDBFF'
       }
     });
     return (
@@ -30,10 +45,13 @@ class App extends Component {
         {timezone && currently &&
           <View>
             <View>
-              <Text>{timezone}</Text>
+              <Text style={styles.location}>{timezone}</Text>
             </View>
             <View>
-              <Text>It’s {currently.apparentTemperature}° and {currently.summary}.</Text>
+              <Text
+                style={styles.weather}
+              >It’s <Text style={styles.temp}>{currently.apparentTemperature}°</Text> and <Text style={styles.summary}>{currently.summary.toLowerCase()}</Text>.
+              </Text>
             </View>
           </View>
         }

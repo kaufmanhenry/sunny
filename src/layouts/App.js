@@ -18,7 +18,17 @@ class App extends Component {
   }
 
   render() {
-    const { weather: { currentWeather: { timezone, currently }, loading, loaded } } = this.props;
+    const {
+      weather: {
+        currentWeather: {
+          timezone,
+          currently,
+          daily
+        },
+        loading,
+        loaded
+      }
+    } = this.props;
     const styles = StyleSheet.create({
       container: {
         paddingVertical: 60,
@@ -28,30 +38,54 @@ class App extends Component {
         fontSize: 16,
         color: '#aaa'
       },
+      weatherContainer: {
+        marginVertical: 60
+      },
       weather: {
         color: '#111',
-        fontSize: 30,
-        marginTop: 60
+        fontSize: 30
       },
       temp: {
         color: '#FF851B'
       },
       summary: {
         color: '#7FDBFF'
+      },
+      bottomDesc: {
+        color: '#aaa',
+        fontWeight: '700',
+        fontSize: 12,
+        marginBottom: 8
+      },
+      bottomTitle: {
+        color: '#111',
+        fontSize: 16,
+        lineHeight: 26
       }
     });
     return (
       <View style={styles.container}>
-        {timezone && currently &&
+        {timezone && currently && daily &&
           <View>
             <View>
               <Text style={styles.location}>{timezone}</Text>
             </View>
-            <View>
+            <View style={styles.weatherContainer}>
+              <Text style={styles.bottomDesc}>Now</Text>
               <Text
                 style={styles.weather}
-              >It’s <Text style={styles.temp}>{currently.apparentTemperature}°</Text> and <Text style={styles.summary}>{currently.summary.toLowerCase()}</Text>.
+              ><Text style={styles.temp}>
+                {currently.apparentTemperature}°
+                </Text> and <Text style={styles.summary}>
+                  {currently.summary.toLowerCase()}
+                </Text>
               </Text>
+            </View>
+            <View>
+              <View>
+                <Text style={styles.bottomDesc}>Summary</Text>
+                <Text style={styles.bottomTitle}>{daily.summary}</Text>
+              </View>
             </View>
           </View>
         }

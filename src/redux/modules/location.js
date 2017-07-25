@@ -1,6 +1,7 @@
 import positionPromise from '../../utils/positionPromiseWrapper';
 
 export const GET_LOCATION = 'GET_LOCATION';
+export const GET_LOCATION_REQUEST = 'GET_LOCATION_REQUEST';
 export const GET_LOCATION_SUCCESS = 'GET_LOCATION_SUCCESS';
 export const GET_LOCATION_FAILURE = 'GET_LOCATION_FAILURE';
 
@@ -13,7 +14,7 @@ const initialState = {
 export default function (state = initialState, action) {
   const { response } = action;
   switch (action.type) {
-    case GET_LOCATION:
+    case GET_LOCATION_REQUEST:
       return {
         ...state,
         loading: true,

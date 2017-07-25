@@ -1,6 +1,7 @@
 import createApiRequest from '../../utils/createApiRequest';
 
 export const GET_WEATHER = 'GET_WEATHER';
+export const GET_WEATHER_REQUEST = 'GET_WEATHER_REQUEST';
 export const GET_WEATHER_SUCCESS = 'GET_WEATHER_SUCCESS';
 export const GET_WEATHER_FAILURE = 'GET_WEATHER_FAILURE';
 
@@ -13,7 +14,7 @@ const initialState = {
 export default function (state = initialState, action) {
   const { response } = action;
   switch (action.type) {
-    case GET_WEATHER:
+    case GET_WEATHER_REQUEST:
       return {
         ...state,
         loading: true,
@@ -37,9 +38,9 @@ export default function (state = initialState, action) {
   }
 }
 
-export function fetchWeather({ lat, lng }) {
+export function fetchWeather({ latitude, longitude }) {
   return {
     type: GET_WEATHER,
-    promise: createApiRequest(`${lat},${lng}`, 'GET')
+    promise: createApiRequest(`${latitude},${longitude}`)
   };
 }

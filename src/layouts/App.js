@@ -9,16 +9,16 @@ import { fetchWeather } from '../redux/modules/weather';
 class App extends Component {
   componentWillMount() {
     this.props.fetchLocation()
-      .then(() => {
+      .then(({ response: { coords: { latitude, longitude } } }) => {
         this.props.fetchWeather({
-          lat: this.props.location.location.coords.latitude,
-          lng: this.props.location.location.coords.longitude
+          latitude,
+          longitude
         });
       });
   }
 
   render() {
-    const { location: { location: { coords } } } = this.props;
+    const { weather: { currentWeather: { timezone, currently }, loading, loaded } } = this.props;
     const styles = StyleSheet.create({
       container: {
         paddingVertical: 50,
@@ -27,7 +27,21 @@ class App extends Component {
     });
     return (
       <View style={styles.container}>
-        {coords && <Text>{coords.latitude} {coords.longitude}</Text>}
+        {timezone && currently &&
+          <View>
+            <View>
+              <Text>{timezone}</Text>
+            </View>
+            <View>
+              <Text>It’s {currently.apparentTemperature}° and {currently.summary}.</Text>
+            </View>
+          </View>
+        }
+        {loading && !loaded &&
+          <View>
+            <Text>Loading</Text>
+          </View>
+        }
       </View>
     );
   }
@@ -36,9 +50,16 @@ class App extends Component {
 App.propTypes = {
   fetchLocation: PropTypes.func.isRequired,
   fetchWeather: PropTypes.func.isRequired,
-  location: PropTypes.shape({
-    location: PropTypes.object
+  // location: PropTypes.shape({
+  //   location: PropTypes.object
+  // }).isRequired,
+  weather: PropTypes.shape({
+    currentWeather: PropTypes.object,
+    loading: PropTypes.bool,
+    loaded: PropTypes.bool
   }).isRequired
 };
 
-export default connect(({ location }) => ({ location }), { fetchLocation, fetchWeather })(App);
+export default connect(
+  ({ location, weather }) => ({ location, weather }),
+  { fetchLocation, fetchWeather })(App);

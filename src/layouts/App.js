@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Image } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { fetchLocation } from '../redux/modules/location';
 import { fetchWeather } from '../redux/modules/weather';
+
+const pounce = require('./pounce.png');
 
 class App extends Component {
   componentWillMount() {
@@ -61,7 +63,15 @@ class App extends Component {
         color: '#111',
         fontSize: 16,
         lineHeight: 26
-      }
+      },
+      image: {
+        width: 260,
+        height: 260,
+        marginVertical: 15,
+        marginHorizontal: 20,
+        borderWidth: 10,
+        borderColor: 'black'
+      },
     });
     return (
       <View style={styles.container}>
@@ -85,6 +95,7 @@ class App extends Component {
               <View>
                 <Text style={styles.bottomDesc}>Summary</Text>
                 <Text style={styles.bottomTitle}>{daily.summary}</Text>
+                <Image style={styles.image} source={pounce} />
               </View>
             </View>
           </View>
